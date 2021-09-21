@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 //
 
-use hmac::{Hmac, Mac,NewMac};
+use hmac::{Hmac, Mac, NewMac};
 use sha2::Sha256;
 use std::cmp;
 
@@ -53,7 +53,7 @@ impl ShoApi for ShoHmacSha256 {
         }
         self.hasher.update(&[0x00]);
         self.cv
-            .copy_from_slice(&self.hasher.clone().finalize().into_bytes()[..]);
+            .copy_from_slice(&self.hasher.clone().finalize().into_bytes());
         self.hasher.reset();
         self.mode = Mode::RATCHETED;
     }
@@ -78,7 +78,8 @@ impl ShoApi for ShoHmacSha256 {
         let mut next_hasher = output_hasher_prefix.clone();
         next_hasher.update(&(outlen as u64).to_be_bytes());
         next_hasher.update(&[0x02]);
-        self.cv.copy_from_slice(&next_hasher.finalize().into_bytes()[..]);
+        self.cv
+            .copy_from_slice(&next_hasher.finalize().into_bytes());
         self.mode = Mode::RATCHETED;
         output
     }

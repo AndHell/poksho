@@ -54,7 +54,7 @@ impl ShoApi for ShoSha256 {
             panic!();
         }
         self.cv
-            .copy_from_slice(&Sha256::digest(&self.hasher.finalize_reset()[..]));
+            .copy_from_slice(&Sha256::digest(&self.hasher.finalize_reset()[..])[..]);
         self.mode = Mode::RATCHETED;
     }
 
